@@ -1,4 +1,36 @@
+import lastName from './utils/lastName';
+import firstName from './utils/firstName';
+import region from './utils/region';
+
+const Data = {
+  lastName,
+  femaleFirstNames: firstName.femaleFirstNames,
+  maleFirstNames: firstName.maleFirstNames,
+  province: region.province,
+  city: region.city,
+  country: region.country,
+  meta: {
+    lastName: 0,
+    femaleFirstNames: 0,
+    maleFirstNames: 0,
+    province: 0,
+    city: 0,
+    country: 0,
+  },
+  getData: function(key) {
+    if (Data.hasOwnProperty(key)) {
+      const value = Data[key];
+      // 是否重置Data对应key索引
+      if (this.meta[key] >= value.length) {
+        this.meta[key] = 0;
+      }
+      return value[this.meta[key]++];
+    }
+    return '';
+  }
+};
 const functTemlate = (function(){
+  const innerData = {};
   const template = {
     bool: function() {
       return !!Math.floor(2 * Math.random())
@@ -12,6 +44,29 @@ const functTemlate = (function(){
       } else {
         return parseInt(this.number(min, max), 10);
       }
+    },
+    firstName: function(gender) {
+      if (gender) {
+        innerData.gender = gender;
+      } else {
+        innerData.gender = this.bool() ? "male" : "female";
+      }
+      return innerData.name = Data.getData(innerData.gender + 'FirstNames');
+    },
+    lastName: function() {
+      return innerData.lastName = Data.getData('lastName');
+    },
+    gender: function() {
+      return innerData.gender || (this.bool() ? "male" : "female")
+    },
+    province: function() {
+      return innerData.province = Data.getData('province');
+    },
+    city: function() {
+      return innerData.city = Data.getData('city');
+    },
+    country: function() {
+      return innerData.country = Data.getData('country');
     }
   };
   return {
