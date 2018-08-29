@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import lastName from './utils/lastName';
 import firstName from './utils/firstName';
 import region from './utils/region';
@@ -67,6 +68,10 @@ const functTemlate = (function(){
     },
     country: function() {
       return innerData.country = Data.getData('country');
+    },
+    // https://github.com/iamkun/dayjs/blob/master/docs/zh-cn/API-reference.md#%E6%A0%BC%E5%BC%8F%E5%8C%96
+    date: function(format) {
+      return dayjs().format(format);
     }
   };
   return {

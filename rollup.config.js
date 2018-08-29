@@ -1,15 +1,6 @@
 import babel from 'rollup-plugin-babel';
-
-const babelConfig = {
-  'presets': [
-    ['env', {
-      'targets': {
-        'browsers': ['last 2 versions']
-      },
-      'loose': true
-    }]
-  ]
-};
+import resolve from 'rollup-plugin-node-resolve';
+import commonJS from 'rollup-plugin-commonjs'
 
 export default {
   input: 'src/index.js',
@@ -19,6 +10,10 @@ export default {
     name: 'MockScript'
   },
   plugins: [
+    resolve(),
+    commonJS({
+      include: 'node_modules/**'
+    }),
     babel({
       exclude: 'node_modules/**',
     })
